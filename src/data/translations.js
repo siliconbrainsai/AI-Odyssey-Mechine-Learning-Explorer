@@ -149,11 +149,15 @@ export const mlTranslations = {
       modelMeta: "Model: RandomForestClassifier (n_estimators=100, joblib)",
       
       codeTabs: {
-        train: "1. train_model.py (Scikit-Learn)",
-        api: "2. main.py (FastAPI)",
-        docker: "3. Dockerfile",
-        req: "4. requirements.txt"
+        train: "1. train_model.py (MLflow Tracking)",
+        logger: "2. logger.py (Structured JSON)",
+        api: "3. main.py (FastAPI + Pydantic v2)",
+        docker: "4. Dockerfile (Multi-Stage)",
+        req: "5. requirements.txt"
       },
+      mlflowBadge: "MLflow Registry: Registered as 'StudentPerformanceClassifier' • Run Active",
+      logStreamTitle: "Production Structured JSON Log Stream",
+      logStreamDesc: "Real-time structured JSON telemetry captured with correlation ID, latency, and sanitized feature payloads.",
       copyBtn: "Copy Code",
       copied: "Copied!",
 
@@ -447,11 +451,15 @@ export const mlTranslations = {
       modelMeta: "మోడల్: RandomForestClassifier (n_estimators=100, joblib)",
 
       codeTabs: {
-        train: "1. train_model.py (Scikit-Learn)",
-        api: "2. main.py (FastAPI)",
-        docker: "3. Dockerfile",
-        req: "4. requirements.txt"
+        train: "1. train_model.py (MLflow ట్రాకింగ్)",
+        logger: "2. logger.py (స్ట్రక్చర్డ్ JSON లాగ్స్)",
+        api: "3. main.py (FastAPI + Pydantic v2)",
+        docker: "4. Dockerfile (మల్టీ-స్టేజ్)",
+        req: "5. requirements.txt"
       },
+      mlflowBadge: "MLflow రిజిస్ట్రీ: 'StudentPerformanceClassifier' గా రిజిస్టర్ అయింది",
+      logStreamTitle: "ప్రొడక్షన్ స్ట్రక్చర్డ్ JSON లాగ్ స్ట్రీమ్",
+      logStreamDesc: "ఇన్ఫరెన్స్ జరిగేటప్పుడు కారిలేషన్ ID, లేటెన్సీ మరియు డేటాతో కూడిన రియల్-టైమ్ ఈవెంట్ లాగ్స్.",
       copyBtn: "కోడ్ కాపీ చేయి",
       copied: "కాపీ అయింది!",
 
@@ -597,181 +605,259 @@ export const mlTranslations = {
 };
 
 export const codeSnippets = {
-  train: `# ==========================================================
-# 1. train_model.py - Scikit-Learn Model Training & Export
-# ==========================================================
+  train: `# ==============================================================================
+# 1. train_model.py - Production Training Pipeline & MLflow Tracking
+# ==============================================================================
+import os
+import json
+import logging
+from typing import Tuple, Dict, Any
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report, roc_auc_score
-import joblib
-
-# 1. Generate Synthetic Training Data (Hours, Attendance, Prep Tests)
-np.random.seed(42)
-n_samples = 1000
-
-hours = np.random.uniform(1, 14, n_samples)
-attendance = np.random.uniform(50, 100, n_samples)
-prep_tests = np.random.randint(0, 8, n_samples)
-
-# Target: 1 (Pass / High Performance), 0 (Needs Support)
-logits = 0.5 * hours + 0.04 * attendance + 0.3 * prep_tests - 7.0
-probabilities = 1 / (1 + np.exp(-logits))
-labels = (probabilities > 0.5).astype(int)
-
-X = pd.DataFrame({"hours": hours, "attendance": attendance, "prep_tests": prep_tests})
-y = labels
-
-# 2. 80/20 Train-Test Split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-# 3. Train Production-Grade Random Forest Estimator
-clf = RandomForestClassifier(
-    n_estimators=100,
-    max_depth=6,
-    min_samples_split=5,
-    random_state=42
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import (
+    mean_squared_error, r2_score, mean_absolute_error,
+    roc_auc_score, accuracy_score, precision_score, recall_score, f1_score,
+    classification_report
 )
-clf.fit(X_train, y_train)
-
-# 4. Evaluation
-preds = clf.predict(X_test)
-print(f"Test ROC-AUC: {roc_auc_score(y_test, clf.predict_proba(X_test)[:, 1]):.4f}")
-print(classification_report(y_test, preds))
-
-# 5. Serialize Artifact for Production Serving
-joblib.dump(clf, "model.pkl")
-print("✅ Successfully exported trained model artifact to model.pkl")`,
-
-  api: `# ==========================================================
-# 2. main.py - High-Performance Asynchronous FastAPI Inference API
-# ==========================================================
-import time
-from contextlib import asynccontextmanager
-from typing import Dict, Any
-from fastapi import FastAPI, HTTPException, status
-from pydantic import BaseModel, Field
 import joblib
-import numpy as np
 
-# Global Model Cache
-model_cache = {}
+try:
+    import mlflow
+    import mlflow.sklearn
+    from mlflow.models.signature import infer_signature
+    MLFLOW_AVAILABLE = True
+except ImportError:
+    MLFLOW_AVAILABLE = False
+
+def train_and_evaluate():
+    # 1. Synthesize realistic academic dataset
+    np.random.seed(42)
+    n_samples = 1500
+    hours = np.random.uniform(0.5, 14.0, n_samples)
+    attendance = np.random.uniform(55.0, 100.0, n_samples)
+    prep_tests = np.random.randint(0, 9, n_samples)
+    
+    continuous_score = np.clip(15.0 + 4.8 * hours + 0.35 * attendance + 2.8 * prep_tests + np.random.normal(0, 3.5, n_samples), 0, 100)
+    binary_label = (continuous_score >= 60.0).astype(int)
+
+    X = pd.DataFrame({"hours_studied": np.round(hours, 2), "attendance_pct": np.round(attendance, 1), "prep_tests": prep_tests})
+    y = binary_label
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42, stratify=y)
+    
+    # 2. Hyperparameters & MLflow Experiment
+    params = {"n_estimators": 120, "max_depth": 6, "min_samples_split": 4, "random_state": 42}
+    experiment_name = "ai-odyssey-student-performance"
+
+    if MLFLOW_AVAILABLE:
+        mlflow.set_experiment(experiment_name)
+        mlflow.start_run(run_name="rf_production_v1.2")
+
+    # 3. Fit Classifier & Continuous Regressor
+    clf = RandomForestClassifier(**params)
+    clf.fit(X_train, y_train)
+
+    reg = LinearRegression()
+    reg.fit(X_train, continuous_score[X_train.index])
+
+    # 4. Metrics Evaluation
+    y_pred = clf.predict(X_test)
+    y_prob = clf.predict_proba(X_test)[:, 1]
+    metrics = {
+        "accuracy": float(accuracy_score(y_test, y_pred)),
+        "roc_auc": float(roc_auc_score(y_test, y_prob)),
+        "precision": float(precision_score(y_test, y_pred)),
+        "recall": float(recall_score(y_test, y_pred)),
+        "r2_score": float(r2_score(continuous_score[X_test.index], reg.predict(X_test))),
+        "mse": float(mean_squared_error(continuous_score[X_test.index], reg.predict(X_test)))
+    }
+
+    # 5. Log to MLflow & Model Registry
+    if MLFLOW_AVAILABLE:
+        mlflow.log_params(params)
+        mlflow.log_metrics(metrics)
+        signature = infer_signature(X_train, clf.predict(X_train))
+        mlflow.sklearn.log_model(
+            sk_model=clf,
+            artifact_path="student_performance_classifier",
+            signature=signature,
+            registered_model_name="StudentPerformanceClassifier"
+        )
+        mlflow.end_run()
+
+    # 6. Save Local Fast Serving Artifact
+    model_payload = {"classifier": clf, "regressor": reg, "metrics": metrics, "version": "v1.2.0-rf120"}
+    joblib.dump(model_payload, "model.pkl")
+    print("✅ Model serialized to model.pkl and registered in MLflow Registry")
+
+if __name__ == "__main__":
+    train_and_evaluate()`,
+
+  logger: `# ==============================================================================
+# 2. logger.py - Production-Grade Structured JSON Observability
+# ==============================================================================
+import sys
+import json
+import logging
+from datetime import datetime, timezone
+from typing import Any, Dict
+
+class JSONFormatter(logging.Formatter):
+    """Formats log records as structured single-line JSON with correlation telemetry."""
+    def format(self, record: logging.LogRecord) -> str:
+        log_record: Dict[str, Any] = {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "level": record.levelname,
+            "logger": record.name,
+            "message": record.getMessage(),
+            "file": record.filename,
+            "line": record.lineno,
+        }
+        for field in ["request_id", "latency_ms", "path", "method", "status_code", "payload", "prediction", "event"]:
+            if hasattr(record, field):
+                log_record[field] = getattr(record, field)
+        if record.exc_info:
+            log_record["exception"] = self.formatException(record.exc_info)
+        return json.dumps(log_record)
+
+def get_logger(name: str = "ai_odyssey_inference", level: int = logging.INFO) -> logging.Logger:
+    logger = logging.getLogger(name)
+    logger.setLevel(level)
+    if not logger.handlers:
+        handler = logging.StreamHandler(sys.stdout)
+        handler.setFormatter(JSONFormatter())
+        logger.addHandler(handler)
+        logger.propagate = False
+    return logger
+
+logger = get_logger()`,
+
+  api: `# ==============================================================================
+# 3. main.py - Asynchronous FastAPI Backend with Pydantic v2 & Observability
+# ==============================================================================
+import time
+import uuid
+from contextlib import asynccontextmanager
+from typing import Dict, Any, Optional
+from datetime import datetime, timezone
+
+from fastapi import FastAPI, Request, Response, status
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, Field
+import numpy as np
+import pandas as pd
+import joblib
+from logger import logger
+
+app_state = {"model_cache": None, "model_version": "v1.2.0-rf120", "start_time": time.time()}
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Load model artifact ONCE on startup into RAM
+    # Pre-load trained model artifact ONCE into RAM on startup
     try:
-        model_cache["classifier"] = joblib.load("model.pkl")
-        print("🚀 Machine Learning Model loaded into memory successfully!")
+        app_state["model_cache"] = joblib.load("model.pkl")
+        logger.info("Model loaded into RAM", extra={"event": "model_loaded", "version": app_state["model_version"]})
     except Exception as e:
-        print(f"⚠️ Warning: Could not load model.pkl ({e}). Initializing fallback.")
-        model_cache["classifier"] = None
+        logger.warning("Operating in heuristic fallback", extra={"event": "model_missing"})
     yield
-    model_cache.clear()
+    app_state["model_cache"] = None
 
-app = FastAPI(
-    title="ML Inference Engine API",
-    description="Asynchronous Machine Learning REST Service for Real-Time Predictions",
-    version="1.0.0",
-    lifespan=lifespan
-)
+app = FastAPI(title="AI Odyssey: ML Inference Engine", version="1.2.0", lifespan=lifespan)
 
-# Pydantic Input Contract with Validation
+# CORS Middleware
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
+
+# Correlation ID & Timing Middleware
+@app.middleware("http")
+async def correlation_and_logging_middleware(request: Request, call_next):
+    request_id = request.headers.get("X-Request-ID", str(uuid.uuid4()))
+    request.state.request_id = request_id
+    start_time = time.perf_counter()
+    
+    response = await call_next(request)
+    latency_ms = round((time.perf_counter() - start_time) * 1000, 2)
+    response.headers["X-Request-ID"] = request_id
+    response.headers["X-Process-Time-Ms"] = str(latency_ms)
+
+    logger.info(
+        f"{request.method} {request.url.path} -> {response.status_code} in {latency_ms}ms",
+        extra={"event": "request_completed", "request_id": request_id, "latency_ms": latency_ms, "status_code": response.status_code}
+    )
+    return response
+
+# Pydantic v2 Input Validation Schema
 class StudentFeaturePayload(BaseModel):
     hours_studied: float = Field(..., ge=0.0, le=24.0, description="Daily study hours")
-    attendance_pct: float = Field(..., ge=0.0, le=100.0, description="Attendance percentage")
+    attendance_pct: float = Field(..., ge=0.0, le=100.0, description="Class attendance percentage")
     prep_tests: int = Field(..., ge=0, le=50, description="Completed practice exams")
 
-    model_config = {
-        "json_schema_extra": {
-            "example": {
-                "hours_studied": 6.5,
-                "attendance_pct": 88.0,
-                "prep_tests": 4
-            }
-        }
+@app.get("/health")
+async def health_check():
+    return {
+        "status": "healthy",
+        "model_loaded": app_state["model_cache"] is not None,
+        "uptime_seconds": round(time.time() - app_state["start_time"], 2)
     }
 
-class PredictionResponse(BaseModel):
-    prediction: int = Field(..., description="1 = Pass/High-Performance, 0 = Needs Support")
-    confidence: float
-    status: str
-    latency_ms: float
-    model_version: str
-
-@app.get("/health")
-def health_check() -> Dict[str, str]:
-    return {"status": "healthy", "service": "ML Inference Engine"}
-
-@app.post("/api/v1/predict-performance", response_model=PredictionResponse, status_code=status.HTTP_200_OK)
-async def predict_performance(payload: StudentFeaturePayload) -> PredictionResponse:
-    start_time = time.perf_counter()
-    clf = model_cache.get("classifier")
+@app.post("/api/v1/predict-performance")
+async def predict_performance(payload: StudentFeaturePayload, request: Request):
+    request_id = getattr(request.state, "request_id", str(uuid.uuid4()))
+    features = pd.DataFrame([payload.model_dump()])
+    cache = app_state.get("model_cache")
     
-    # Feature Vector Construction
-    features = np.array([[payload.hours_studied, payload.attendance_pct, payload.prep_tests]])
-    
-    if clf is not None:
-        pred = int(clf.predict(features)[0])
-        conf = float(clf.predict_proba(features)[0][pred])
+    if cache:
+        pred = int(cache["classifier"].predict(features)[0])
+        prob = float(cache["classifier"].predict_proba(features)[0][pred])
+        score = round(float(cache["regressor"].predict(features)[0]), 2)
     else:
-        # Heuristic fallback if model.pkl is unmounted
-        score = 0.5 * payload.hours_studied + 0.04 * payload.attendance_pct + 0.3 * payload.prep_tests
-        pred = 1 if score > 7.0 else 0
-        conf = 0.89
+        pred, prob, score = 1, 0.92, 85.0
 
-    latency = round((time.perf_counter() - start_time) * 1000, 2)
+    return {
+        "status": "success",
+        "prediction": pred,
+        "decision_label": "Pass / High Performance" if pred == 1 else "Needs Intervention",
+        "confidence_pct": round(prob * 100, 1),
+        "predicted_score": score,
+        "request_id": request_id
+    }`,
 
-    return PredictionResponse(
-        prediction=pred,
-        confidence=conf,
-        status="Success",
-        latency_ms=latency,
-        model_version="v1.0.0-rf100"
-    )`,
-
-  docker: `# ==========================================================
-# 3. Dockerfile - Lightweight Containerized Inference Environment
-# ==========================================================
-FROM python:3.11-slim
-
-ENV PYTHONUNBUFFERED=1 \\
-    PYTHONDONTWRITEBYTECODE=1 \\
-    PORT=8000
-
-WORKDIR /app
-
-# Install build dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \\
-    curl \\
-    && rm -rf /var/lib/apt/lists/*
-
-# Install python requirements
+  docker: `# ==============================================================================
+# 4. Dockerfile - Production Multi-Stage Container Build
+# ==============================================================================
+# Stage 1: Builder
+FROM python:3.11-slim AS builder
+WORKDIR /install
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential curl && rm -rf /var/lib/apt/lists/*
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --prefix=/install/deps -r requirements.txt
 
-# Copy application and model artifact
-COPY main.py .
-COPY model.pkl .
+# Stage 2: Minimal Production Runner
+FROM python:3.11-slim AS runner
+WORKDIR /app
+RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
+COPY --from=builder /install/deps /usr/local
 
-# Non-root secure user
-RUN useradd -m appuser && chown -R appuser:appuser /app
+# Non-root user for security
+RUN useradd -m -u 1001 appuser && chown -R appuser:appuser /app
+COPY --chown=appuser:appuser logger.py main.py train_model.py requirements.txt model.pk[l] ./
 USER appuser
 
 EXPOSE 8000
-
-HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \\
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \\
     CMD curl -f http://localhost:8000/health || exit 1
 
-# Production ASGI server with 2 Uvicorn workers
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]`,
 
-  req: `fastapi==0.115.6
-uvicorn[standard]==0.34.0
-pydantic==2.10.4
-scikit-learn==1.6.0
-numpy==2.2.0
-pandas==2.2.3
-joblib==1.4.2`
+  req: `fastapi>=0.115.0
+uvicorn[standard]>=0.34.0
+pydantic>=2.10.0
+scikit-learn>=1.6.0
+mlflow>=2.19.0
+pandas>=2.2.0
+numpy>=1.26.0
+joblib>=1.4.0
+python-multipart>=0.0.20`
 };

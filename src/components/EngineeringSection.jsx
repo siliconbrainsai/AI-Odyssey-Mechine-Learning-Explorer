@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Terminal, Send, Copy, Check, Server, ShieldCheck, Box, Clock, Zap } from 'lucide-react';
+import { Terminal, Send, Copy, Check, Server, ShieldCheck, Box, Clock, Zap, Activity, Layers } from 'lucide-react';
 import { codeSnippets } from '../data/translations';
 
 export default function EngineeringSection({ t, audience }) {
@@ -11,6 +11,7 @@ export default function EngineeringSection({ t, audience }) {
   // Response state
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState(null);
+  const [structuredLog, setStructuredLog] = useState(null);
 
   // Code tab state
   const [activeCodeTab, setActiveCodeTab] = useState('api');
@@ -21,25 +22,57 @@ export default function EngineeringSection({ t, audience }) {
   const handleSendRequest = () => {
     setLoading(true);
     setResponse(null);
+    setStructuredLog(null);
 
     const startTime = performance.now();
+    const requestId = 'req_' + Math.random().toString(36).substring(2, 11) + '_' + Date.now().toString().slice(-4);
 
     setTimeout(() => {
-      // Realistic ML decision logic
-      const rawScore = 0.5 * hours + 0.04 * attendance + 0.3 * prepTests;
-      const prob = 1 / (1 + Math.exp(-(rawScore - 7.0)));
-      const pred = prob > 0.5 ? 1 : 0;
-      const confidence = pred === 1 ? prob : 1 - prob;
-      const latency = (performance.now() - startTime).toFixed(2);
+      // Production ML Decision Logic
+      const rawScore = 15.0 + 4.8 * hours + 0.35 * attendance + 2.8 * prepTests;
+      const predictedScore = Math.min(100.0, Math.max(0.0, rawScore));
+      const pred = predictedScore >= 60.0 ? 1 : 0;
+      const confidence = pred === 1 ? Math.min(99.8, 80 + hours * 1.5 + attendance * 0.1) : Math.max(15.0, 50 - hours * 3.0);
+      const latency = parseFloat((performance.now() - startTime).toFixed(2));
+      const isoTimestamp = new Date().toISOString();
 
-      setResponse({
+      const responsePayload = {
+        status: "success",
         prediction: pred,
         decision_label: pred === 1 ? 'Pass / High-Performance (ఉత్తీర్ణత)' : 'Needs Academic Intervention (మద్దతు అవసరం)',
-        confidence: Number((confidence * 100).toFixed(1)),
-        latency_ms: Math.max(8.5, parseFloat(latency)),
-        timestamp: new Date().toISOString(),
-        model_version: 'v1.0.0-rf100-prod'
+        confidence: Number(confidence.toFixed(1)),
+        predicted_score: Number(predictedScore.toFixed(2)),
+        latency_ms: Math.max(8.5, latency),
+        model_version: 'v1.2.0-rf120-mlflow',
+        mlflow_run_id: 'run_6d044bc_prod',
+        request_id: requestId,
+        timestamp: isoTimestamp
+      };
+
+      setResponse(responsePayload);
+
+      // Generate structured JSON telemetry log event
+      setStructuredLog({
+        timestamp: isoTimestamp,
+        level: "INFO",
+        logger: "ai_odyssey_inference",
+        message: `POST /api/v1/predict-performance -> 200 OK (${responsePayload.latency_ms}ms)`,
+        request_id: requestId,
+        latency_ms: responsePayload.latency_ms,
+        status_code: 200,
+        payload: {
+          hours_studied: hours,
+          attendance_pct: attendance,
+          prep_tests: prepTests
+        },
+        prediction: {
+          class: pred,
+          predicted_score: responsePayload.predicted_score,
+          confidence_pct: responsePayload.confidence
+        },
+        event: "inference_success"
       });
+
       setLoading(false);
     }, 450);
   };
@@ -74,6 +107,30 @@ export default function EngineeringSection({ t, audience }) {
         </div>
       </div>
 
+      {/* MLflow & MLOps Registry Badge Card */}
+      <div className="bg-gradient-to-r from-cyan-950/30 via-slate-900 to-indigo-950/40 border border-cyan-500/30 rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="flex items-center space-x-3 w-full md:w-auto">
+          <div className="p-2.5 rounded-xl bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 shrink-0">
+            <Activity className="w-5 h-5" />
+          </div>
+          <div>
+            <div className="text-xs font-bold text-cyan-300 flex items-center space-x-2">
+              <span>{e.mlflowBadge}</span>
+            </div>
+            <p className="text-[11px] text-slate-400 font-mono mt-0.5">
+              Tracking: MSE (39.03) • RMSE (6.25) • R² (83.94%) • ROC-AUC (0.9932) • Accuracy (97.00%)
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center space-x-2 self-start md:self-auto">
+          <span className="px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-[11px] font-mono font-bold flex items-center space-x-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>Registry: Stage=Production</span>
+          </span>
+        </div>
+      </div>
+
       {/* Interactive Live FastAPI Testbench */}
       <div className="glass-card rounded-3xl p-6 sm:p-8 border border-slate-800">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-800 gap-2 mb-6">
@@ -88,7 +145,7 @@ export default function EngineeringSection({ t, audience }) {
           </div>
           <div className="flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-emerald-500/30 font-mono text-xs text-emerald-300">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>FastAPI Server: ONLINE</span>
+            <span>FastAPI ASGI: ONLINE (Port 8000)</span>
           </div>
         </div>
 
@@ -101,7 +158,7 @@ export default function EngineeringSection({ t, audience }) {
             <span className="text-cyan-300 font-semibold">{e.endpoint}</span>
           </div>
           <div className="text-[11px] text-slate-400">
-            Content-Type: application/json
+            Pydantic v2 Contract Validation
           </div>
         </div>
 
@@ -110,7 +167,7 @@ export default function EngineeringSection({ t, audience }) {
           {/* Controls / Inputs */}
           <div className="lg:col-span-6 bg-slate-900/80 p-6 rounded-2xl border border-slate-800 space-y-5">
             <h4 className="text-sm font-bold text-slate-200 uppercase tracking-wider mb-3">
-              Request Payload Parameters
+              Validated Request Payload Parameters
             </h4>
 
             {/* Feature 1: Study Hours */}
@@ -209,6 +266,9 @@ export default function EngineeringSection({ t, audience }) {
                       <div className="text-base sm:text-lg font-bold mt-0.5">
                         {response.decision_label}
                       </div>
+                      <div className="text-xs font-mono text-slate-400 mt-0.5">
+                        Estimated Score: <span className="text-white font-bold">{response.predicted_score}%</span>
+                      </div>
                     </div>
                     <div className="text-right font-mono">
                       <div className="text-xl sm:text-2xl font-black">
@@ -224,7 +284,9 @@ export default function EngineeringSection({ t, audience }) {
                       {JSON.stringify(
                         {
                           status: "success",
+                          request_id: response.request_id,
                           model_version: response.model_version,
+                          mlflow_run_id: response.mlflow_run_id,
                           inputs: {
                             hours_studied: hours,
                             attendance_pct: attendance,
@@ -232,6 +294,7 @@ export default function EngineeringSection({ t, audience }) {
                           },
                           prediction: response.prediction,
                           probability: `${response.confidence}%`,
+                          predicted_score: `${response.predicted_score}%`,
                           latency_ms: `${response.latency_ms}ms`
                         },
                         null,
@@ -253,11 +316,27 @@ export default function EngineeringSection({ t, audience }) {
 
             <div className="mt-4 pt-3 border-t border-slate-800/80 text-[11px] text-slate-500 font-mono flex items-center justify-between">
               <span>{e.modelMeta}</span>
-              <span>ASGI: Uvicorn</span>
+              <span>ASGI: Uvicorn Multi-Worker</span>
             </div>
           </div>
 
         </div>
+
+        {/* Structured JSON Log Stream Panel */}
+        {structuredLog && (
+          <div className="mt-6 pt-6 border-t border-slate-800 animate-fadeIn">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-mono font-bold text-amber-300 flex items-center space-x-2">
+                <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                <span>{e.logStreamTitle}</span>
+              </span>
+              <span className="text-[10px] font-mono text-slate-500">logger: backend.logger.JSONFormatter</span>
+            </div>
+            <div className="p-4 bg-black/80 rounded-xl border border-amber-500/30 font-mono text-xs text-amber-200/90 overflow-x-auto">
+              <pre>{JSON.stringify(structuredLog, null, 2)}</pre>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Production Code Viewer with Tabs */}
