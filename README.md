@@ -54,3 +54,23 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ```bash
 npm run build
 ```
+
+---
+
+## ⚡ Deploy to Vercel
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fsiliconbrainsai%2FAI-Odyssey-Mechine-Learning-Explorer)
+
+### Option A: Via Vercel Dashboard (Recommended)
+1. Go to [vercel.com/new](https://vercel.com/new).
+2. Connect your GitHub account and import **`AI-Odyssey-Mechine-Learning-Explorer`**.
+3. Framework Preset: **Vite** (auto-detected).
+4. Click **Deploy**.
+
+### Option B: Via Vercel CLI
+```bash
+npx vercel
+# For production deployment:
+npx vercel --prod
+```
+
