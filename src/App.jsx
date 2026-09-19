@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import AuthModal from './components/AuthModal';
+import LandingPage from './components/landing/LandingPage';
 import FoundationsSection from './components/FoundationsSection';
 import AlgorithmsSection from './components/AlgorithmsSection';
 import EngineeringSection from './components/EngineeringSection';
@@ -11,6 +12,7 @@ import { BookOpen, Cpu, Terminal, CheckCircle, Layers, ArrowUp } from 'lucide-re
 
 export default function App() {
   const [lang, setLang] = useState('te'); // Default to Telugu as in original project
+  const [view, setView] = useState('landing'); // 'landing' (Home Command Nexus) or 'lab' (Interactive 5 Modules)
   const [currentUser, setCurrentUser] = useState(() => {
     try {
       const savedUser = localStorage.getItem('ai_odyssey_user');
@@ -62,6 +64,12 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleSelectModule = (moduleId) => {
+    setActiveTab(moduleId);
+    setView('lab');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const getTabIcon = (id) => {
     switch (id) {
       case 'foundations':
@@ -79,10 +87,29 @@ export default function App() {
     }
   };
 
+  // If in Landing / Command Nexus View
+  if (view === 'landing') {
+    return (
+      <LandingPage
+        lang={lang}
+        setLang={setLang}
+        audience={audience}
+        setAudience={setAudience}
+        t={t}
+        onEnterLab={() => setView('lab')}
+        onSelectModule={handleSelectModule}
+        currentUser={currentUser}
+        onLogout={handleLogout}
+        onLoginSuccess={handleLoginSuccess}
+      />
+    );
+  }
+
+  // Interactive 5-Module Lab View
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-cyan-500 selection:text-white flex flex-col justify-between">
       
-      {/* Navbar with Language & Audience controls & Authentication */}
+      {/* Navbar with Language & Audience controls, Auth, and Command Hub return */}
       <Navbar
         lang={lang}
         setLang={setLang}
@@ -92,6 +119,7 @@ export default function App() {
         currentUser={currentUser}
         onOpenAuth={() => setAuthModalOpen(true)}
         onLogout={handleLogout}
+        onGoHome={() => setView('landing')}
       />
 
       {/* Glassmorphic Authentication & Track Selection Modal */}

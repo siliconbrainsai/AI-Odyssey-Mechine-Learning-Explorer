@@ -9,7 +9,8 @@ export default function Navbar({
   t,
   currentUser,
   onOpenAuth,
-  onLogout 
+  onLogout,
+  onGoHome
 }) {
   const authT = t.auth || {};
 
@@ -20,7 +21,7 @@ export default function Navbar({
           
           {/* Logo & Portal Identity */}
           <div className="flex items-center space-x-3.5">
-            <div className="relative group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <div className="relative group cursor-pointer" onClick={onGoHome || (() => window.scrollTo({ top: 0, behavior: 'smooth' }))}>
               <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-cyan-500 via-teal-400 to-blue-600 p-[2px] shadow-lg shadow-cyan-500/20 group-hover:shadow-cyan-500/40 transition-all duration-300">
                 <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center">
                   <Sparkles className="w-6 h-6 text-cyan-400 animate-pulse" />
@@ -34,7 +35,7 @@ export default function Navbar({
 
             <div>
               <div className="flex items-center space-x-2">
-                <h1 className="text-xl sm:text-2xl font-black bg-gradient-to-r from-cyan-300 via-teal-200 to-indigo-300 bg-clip-text text-transparent tracking-tight">
+                <h1 className="text-xl sm:text-2xl font-black bg-gradient-to-r from-cyan-300 via-teal-200 to-indigo-300 bg-clip-text text-transparent tracking-tight cursor-pointer" onClick={onGoHome}>
                   {t.appTitle}
                 </h1>
                 <span className="hidden md:inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-cyan-500/10 text-cyan-300 border border-cyan-500/25">
@@ -47,8 +48,21 @@ export default function Navbar({
             </div>
           </div>
 
-          {/* Controls: Persona Switcher + Auth + Bilingual Toggle */}
+          {/* Controls: Persona Switcher + Auth + Bilingual Toggle + Command Hub */}
           <div className="flex items-center space-x-2 sm:space-x-3">
+            
+            {/* Return to Command Nexus / Home Button */}
+            {onGoHome && (
+              <button
+                type="button"
+                onClick={onGoHome}
+                className="hidden md:flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-cyan-500/30 hover:border-cyan-400/50 text-cyan-300 text-xs font-bold transition-all shadow-sm active:scale-95"
+                title="Return to Command Nexus Landing Page"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                <span>{lang === 'en' ? 'Command Hub' : 'కమాండ్ హబ్'}</span>
+              </button>
+            )}
             
             {/* Audience Track Switcher (Student / Engineer) */}
             <div className="flex items-center p-1 bg-slate-900/90 border border-slate-800 rounded-xl shadow-inner">

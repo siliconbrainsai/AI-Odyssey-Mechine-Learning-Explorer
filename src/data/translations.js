@@ -367,6 +367,65 @@ export const mlTranslations = {
       requiredField: "Please fill in all required fields."
     },
 
+    landing: {
+      brand: "SILICONBRAIN AI",
+      tagline: "DEFENSE & GEOSPATIAL LABS • SECURE PORTAL",
+      engineStatus: "ML EXPLORER ENGINE STATUS: V.2.0",
+      statusOnline: "ONLINE",
+      heroTitle: "AI ODYSSEY: MACHINE LEARNING EXPLORER",
+      heroSubtitle: "AI-Powered Interactive Learning & Production Studio by SiliconBrain AI",
+      heroDesc: "Master machine learning concepts through intuitive visual examples and professional production engineering workflows.",
+      selectTrackTitle: "TARGET AUDIENCE TRACK",
+      modulesHeading: "CORE EXPLORATION MODULES",
+      moduleFoundations: "1. Foundations",
+      moduleFoundationsDesc: "Rule-Based vs ML • 3 Pillars • Data Splitting Simulator",
+      moduleAlgorithms: "2. Algorithm Lab",
+      moduleAlgorithmsDesc: "Linear & Logistic Regression • K-Means • Random Forest",
+      moduleEngineering: "3. Python & FastAPI",
+      moduleEngineeringDesc: "MLflow Tracking • Containerization • Live Inference Testbench",
+      moduleQuiz: "4. Knowledge Quiz",
+      moduleQuizDesc: "Bilingual interactive assessment with instant explanations",
+      moduleGlossary: "5. ML Glossary",
+      moduleGlossaryDesc: "Student analogies vs engineering mathematical definitions",
+      
+      // Monitor & Telemetry
+      monitorHeader: "LIVE ML MODEL TRAINING MONITOR",
+      monitorSubtitle: "Telemetry: ai-odyssey-student-classifier • Active Run #104",
+      metricLoss: "Training Loss",
+      metricAcc: "Val Accuracy",
+      metricEpoch: "Epoch Progress",
+      metricLatency: "Batch Latency",
+      coreStatus: "NEURON CORE ACTIVE",
+      throughputText: "1,280 infer/sec • P99: 1.4ms",
+      
+      // Quick access chips
+      quickAccessTitle: "QUICK ACCESS TOPICS // INTERACTIVE DIRECT JUMP",
+      chipLinReg: "Linear Regression Playground",
+      chipFastAPI: "FastAPI ASGI Inference",
+      chipKMeans: "K-Means & Elbow Method",
+      chipRandomForest: "Random Forest Ensembles",
+      chipQuiz: "Knowledge Assessment Quiz",
+      
+      // Auth Card (Access Command Nexus)
+      authCardBadge: "SECURE ACCESS PROTOCOL // LEVEL-4",
+      authCardTitle: "ACCESS COMMAND NEXUS",
+      authCardSubtitle: "Authorize operator identity or initialize guest sandbox.",
+      ssoGithub: "GitHub Repo",
+      ssoGoogle: "Google SSO",
+      orAuth: "OR AUTHORIZE WITH CREDENTIALS",
+      idLabel: "Operator ID / Corporate Email",
+      passLabel: "Access Key / Token",
+      rememberSession: "Remember active session",
+      forgotToken: "Forgot Key?",
+      btnInitSession: "INITIALIZE ML EXPLORER SESSION",
+      btnStudentStart: "LAUNCH STUDENT EXPLORER",
+      btnEngineerStart: "LAUNCH PRODUCTION STUDIO",
+      autofillAnalyst: "⚡ Autofill Operational Analyst (analyst@siliconbrain.ai)",
+      quickGuestExplore: "🚀 Instant Guest Access (No Credentials Required)",
+      enterLabDirectly: "Open Full Interactive Lab",
+      authFooter: "SiliconBrain AI • Defense & Enterprise Machine Learning Studio • All telemetry encrypted & audited"
+    },
+
     footer: {
       text: "Designed for Students & Engineers • Bilingual ML Learning Interactive Portal",
       rights: "Built with React, Vite & Tailwind CSS • Production Ready",
@@ -740,6 +799,65 @@ export const mlTranslations = {
       invalidCreds: "ఈమెయిల్ లేదా పాస్‌వర్డ్ తప్పు. దయచేసి మళ్లీ ప్రయత్నించండి.",
       passwordMismatch: "పాస్‌వర్డ్‌లు సరిపోలడం లేదు.",
       requiredField: "దయచేసి అన్ని అవసరమైన వివరాలను పూరించండి."
+    },
+
+    landing: {
+      brand: "సిలికాన్‌బ్రెయిన్ AI",
+      tagline: "డిఫెన్స్ & జియోస్పేషియల్ ల్యాబ్స్ • సురక్షిత పోర్టల్",
+      engineStatus: "ML ఎక్స్‌ప్లోరర్ ఇంజిన్ స్థితి: V.2.0",
+      statusOnline: "ఆన్‌లైన్",
+      heroTitle: "AI ఒడిస్సీ: మెషిన్ లెర్నింగ్ ఎక్స్‌ప్లోరర్",
+      heroSubtitle: "సిలికాన్‌బ్రెయిన్ AI వారి ఇంటరాక్టివ్ లెర్నింగ్ & ప్రొడక్షన్ స్టూడియో",
+      heroDesc: "సులభమైన విజువల్ ఉదాహరణలు మరియు ప్రొఫెషనల్ ఇంజనీరింగ్ వర్క్‌ఫ్లోల ద్వారా మెషిన్ లెర్నింగ్ భావనలను నేర్చుకోండి.",
+      selectTrackTitle: "అభ్యాస విధానం (Track) ఎంపిక",
+      modulesHeading: "కీలక అన్వేషణ మాడ్యూల్స్",
+      moduleFoundations: "1. ప్రాథమిక అంశాలు",
+      moduleFoundationsDesc: "రూల్-బేస్డ్ vs ML • 3 పిల్లర్లు • డేటా స్ప్లిటింగ్ సిమ్యులేటర్",
+      moduleAlgorithms: "2. అల్గారిథమ్ ల్యాబ్",
+      moduleAlgorithmsDesc: "లీనియర్ & లాజిస్టిక్ రిగ్రెషన్ • K-మీన్స్ • రాండమ్ ఫారెస్ట్",
+      moduleEngineering: "3. పైథాన్ & FastAPI",
+      moduleEngineeringDesc: "MLflow ట్రాకింగ్ • కంటైనరైజేషన్ • లైవ్ ఇన్ఫరెన్స్ టెస్ట్‌బెంచ్",
+      moduleQuiz: "4. జ్ఞాన పరిశీలన క్విజ్",
+      moduleQuizDesc: "తక్షణ వివరణలతో కూడిన ద్విభాషా ఇంటరాక్టివ్ మూల్యాంకనం",
+      moduleGlossary: "5. ML శబ్దకోశం",
+      moduleGlossaryDesc: "విద్యార్థి ఉదాహరణలు vs ఇంజనీరింగ్ గణిత నిర్వచనాలు",
+      
+      // Monitor & Telemetry
+      monitorHeader: "లైవ్ ML మోడల్ ట్రైనింగ్ మానిటర్",
+      monitorSubtitle: "టెలిమెట్రీ: ai-odyssey-student-classifier • రన్ #104",
+      metricLoss: "ట్రైనింగ్ లాస్ (Loss)",
+      metricAcc: "వ్యాలిడేషన్ కచ్చితత్వం (Acc)",
+      metricEpoch: "ఎపోచ్ పురోగతి (Epoch)",
+      metricLatency: "ప్రాసెసింగ్ వేగం",
+      coreStatus: "న్యూరాన్ కోర్ యాక్టివ్",
+      throughputText: "1,280 ఇన్ఫరెన్స్/సెకన్ • P99: 1.4ms",
+      
+      // Quick access chips
+      quickAccessTitle: "శీఘ్ర యాక్సెస్ అంశాలు // ప్రత్యక్ష ల్యాబ్ లింకులు",
+      chipLinReg: "లీనియర్ రిగ్రెషన్ ప్లేగ్రౌండ్",
+      chipFastAPI: "FastAPI ASGI ఇన్ఫరెన్స్",
+      chipKMeans: "K-మీన్స్ & ఎల్బో పద్ధతి",
+      chipRandomForest: "రాండమ్ ఫారెస్ట్ ఎన్‌సెంబుల్స్",
+      chipQuiz: "నాలెడ్జ్ అసెస్‌మెంట్ క్విజ్",
+      
+      // Auth Card (Access Command Nexus)
+      authCardBadge: "సెక్యూర్ యాక్సెస్ ప్రోటోకాల్ // లెవల్-4",
+      authCardTitle: "యాక్సెస్ కమాండ్ నెక్సస్",
+      authCardSubtitle: "ఆపరేటర్ గుర్తింపును ధృవీకరించండి లేదా గెస్ట్ మోడ్ ప్రారంభించండి.",
+      ssoGithub: "GitHub రెపో",
+      ssoGoogle: "Google SSO",
+      orAuth: "లేదా అధికారిక ఆధారాలతో లాగిన్ అవ్వండి",
+      idLabel: "ఆపరేటర్ ID / అధికారిక ఈమెయిల్",
+      passLabel: "యాక్సెస్ కీ / పాస్‌వర్డ్",
+      rememberSession: "సెషన్‌ను యాక్టివ్‌గా ఉంచు",
+      forgotToken: "కీ మర్చిపోయారా?",
+      btnInitSession: "ML ఎక్స్‌ప్లోరర్ సెషన్‌ను ప్రారంభించండి",
+      btnStudentStart: "స్టూడెంట్ ఎక్స్‌ప్లోరర్ ప్రారంభించు",
+      btnEngineerStart: "ప్రొడక్షన్ స్టూడియో ప్రారంభించు",
+      autofillAnalyst: "⚡ ఎనలిస్ట్ ఖాతా వివరాలు నింపండి (analyst@siliconbrain.ai)",
+      quickGuestExplore: "🚀 తక్షణ గెస్ట్ యాక్సెస్ (లాగిన్ అవసరం లేదు)",
+      enterLabDirectly: "పూర్తి ఇంటరాక్టివ్ ల్యాబ్‌ను తెరవండి",
+      authFooter: "సిలికాన్‌బ్రెయిన్ AI • డిఫెన్స్ & ఎంటర్‌ప్రైజ్ మెషిన్ లెర్నింగ్ స్టూడియో • సురక్షిత ఆడిటింగ్ వ్యవస్థ"
     },
 
     footer: {
