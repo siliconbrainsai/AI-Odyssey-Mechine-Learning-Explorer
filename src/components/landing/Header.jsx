@@ -36,7 +36,7 @@ export default function Header({
             <div>
               <div className="flex items-center space-x-2">
                 <h1 className="text-lg sm:text-xl font-black tracking-wider bg-gradient-to-r from-cyan-300 via-teal-200 to-indigo-200 bg-clip-text text-transparent uppercase">
-                  {landingT.brand || "SILICONBRAIN AI"}
+                  {landingT.brand || "SILICONBRAINSAI"}
                 </h1>
                 <span className="hidden md:inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 tracking-wider">
                   NEXUS // V2

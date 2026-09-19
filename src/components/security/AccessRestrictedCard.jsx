@@ -47,7 +47,7 @@ export default function AccessRestrictedCard({
 
       {/* Description */}
       <p className="relative z-10 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl mx-auto mb-6">
-        {securityT.restrictedDesc || "The AI Odyssey Machine Learning Laboratory and internal execution modules are restricted to authorized SiliconBrain AI personnel. Only verified corporate accounts ending in @siliconbrain.ai are granted operational clearance."}
+        {securityT.restrictedDesc || "The AI Odyssey Machine Learning Laboratory and internal execution modules are restricted to authorized Siliconbrainsai personnel. Only verified corporate accounts ending in @siliconbrain.ai are granted operational clearance."}
       </p>
 
       {/* Attempted Identity Alert (if provided) */}

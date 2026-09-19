@@ -368,12 +368,12 @@ export const mlTranslations = {
     },
 
     landing: {
-      brand: "SILICONBRAIN AI",
+      brand: "SILICONBRAINSAI",
       tagline: "DEFENSE & GEOSPATIAL LABS • SECURE PORTAL",
       engineStatus: "ML EXPLORER ENGINE STATUS: V.2.0",
       statusOnline: "ONLINE",
       heroTitle: "AI ODYSSEY: MACHINE LEARNING EXPLORER",
-      heroSubtitle: "AI-Powered Interactive Learning & Production Studio by SiliconBrain AI",
+      heroSubtitle: "AI-Powered Interactive Learning & Production Studio by Siliconbrainsai",
       heroDesc: "Master machine learning concepts through intuitive visual examples and professional production engineering workflows.",
       selectTrackTitle: "TARGET AUDIENCE TRACK",
       modulesHeading: "CORE EXPLORATION MODULES",
@@ -423,13 +423,13 @@ export const mlTranslations = {
       autofillAnalyst: "⚡ Autofill Operational Analyst (analyst@siliconbrain.ai)",
       quickGuestExplore: "🚀 Instant Guest Access (No Credentials Required)",
       enterLabDirectly: "Open Full Interactive Lab",
-      authFooter: "SiliconBrain AI • Defense & Enterprise Machine Learning Studio • All telemetry encrypted & audited"
+      authFooter: "Siliconbrainsai • Defense & Enterprise Machine Learning Studio • All telemetry encrypted & audited"
     },
 
     security: {
       restrictedBadge: "ACCESS CONTROL // LEVEL-4 CLASSIFIED",
       restrictedTitle: "Access Restricted: Corporate Operator ID Required",
-      restrictedDesc: "The AI Odyssey Machine Learning Laboratory and internal execution modules are restricted to authorized SiliconBrain AI personnel. Only verified corporate accounts ending in @siliconbrain.ai are granted operational clearance.",
+      restrictedDesc: "The AI Odyssey Machine Learning Laboratory and internal execution modules are restricted to authorized Siliconbrainsai personnel. Only verified corporate accounts ending in @siliconbrain.ai are granted operational clearance.",
       policyNote: "Security Directive: Public registrations, external domains (@gmail, @yahoo, etc.), and unverified direct links are strictly blocked under corporate compliance standards.",
       authorizedDomainOnly: "Corporate Domain Whitelist Enforced: *@siliconbrain.ai",
       btnAutofillAuthorized: "Authenticate as Authorized Analyst (analyst@siliconbrain.ai)",
@@ -814,12 +814,12 @@ export const mlTranslations = {
     },
 
     landing: {
-      brand: "సిలికాన్‌బ్రెయిన్ AI",
+      brand: "SILICONBRAINSAI",
       tagline: "డిఫెన్స్ & జియోస్పేషియల్ ల్యాబ్స్ • సురక్షిత పోర్టల్",
       engineStatus: "ML ఎక్స్‌ప్లోరర్ ఇంజిన్ స్థితి: V.2.0",
       statusOnline: "ఆన్‌లైన్",
       heroTitle: "AI ఒడిస్సీ: మెషిన్ లెర్నింగ్ ఎక్స్‌ప్లోరర్",
-      heroSubtitle: "సిలికాన్‌బ్రెయిన్ AI వారి ఇంటరాక్టివ్ లెర్నింగ్ & ప్రొడక్షన్ స్టూడియో",
+      heroSubtitle: "SILICONBRAINSAI వారి ఇంటరాక్టివ్ లెర్నింగ్ & ప్రొడక్షన్ స్టూడియో",
       heroDesc: "సులభమైన విజువల్ ఉదాహరణలు మరియు ప్రొఫెషనల్ ఇంజనీరింగ్ వర్క్‌ఫ్లోల ద్వారా మెషిన్ లెర్నింగ్ భావనలను నేర్చుకోండి.",
       selectTrackTitle: "అభ్యాస విధానం (Track) ఎంపిక",
       modulesHeading: "కీలక అన్వేషణ మాడ్యూల్స్",
@@ -869,13 +869,13 @@ export const mlTranslations = {
       autofillAnalyst: "⚡ ఎనలిస్ట్ ఖాతా వివరాలు నింపండి (analyst@siliconbrain.ai)",
       quickGuestExplore: "🚀 తక్షణ గెస్ట్ యాక్సెస్ (లాగిన్ అవసరం లేదు)",
       enterLabDirectly: "పూర్తి ఇంటరాక్టివ్ ల్యాబ్‌ను తెరవండి",
-      authFooter: "సిలికాన్‌బ్రెయిన్ AI • డిఫెన్స్ & ఎంటర్‌ప్రైజ్ మెషిన్ లెర్నింగ్ స్టూడియో • సురక్షిత ఆడిటింగ్ వ్యవస్థ"
+      authFooter: "SILICONBRAINSAI • డిఫెన్స్ & ఎంటర్‌ప్రైజ్ మెషిన్ లెర్నింగ్ స్టూడియో • సురక్షిత ఆడిటింగ్ వ్యవస్థ"
     },
 
     security: {
       restrictedBadge: "యాక్సెస్ కంట్రోల్ // లెవల్-4 క్లాసిఫైడ్",
       restrictedTitle: "యాక్సెస్ పరిమితం: కార్పొరేట్ ఆపరేటర్ ID తప్పనిసరి",
-      restrictedDesc: "AI ఒడిస్సీ మెషిన్ లెర్నింగ్ లేబొరేటరీ మరియు అంతర్గత మోడల్స్ కేవలం సిలికాన్‌బ్రెయిన్ AI అధికారిక సిబ్బందికి మాత్రమే పరిమితం చేయబడ్డాయి. @siliconbrain.ai తో ముగిసే అధీకృత ఖాతాలకు మాత్రమే యాక్సెస్ లభిస్తుంది.",
+      restrictedDesc: "AI ఒడిస్సీ మెషిన్ లెర్నింగ్ లేబొరేటరీ మరియు అంతర్గత మోడల్స్ కేవలం SILICONBRAINSAI అధికారిక సిబ్బందికి మాత్రమే పరిమితం చేయబడ్డాయి. @siliconbrain.ai తో ముగిసే అధీకృత ఖాతాలకు మాత్రమే యాక్సెస్ లభిస్తుంది.",
       policyNote: "భద్రతా నిబంధన: కార్పొరేట్ ప్రమాణాల ప్రకారం పబ్లిక్ రిజిస్ట్రేషన్లు, బాహ్య డొమైన్లు (@gmail, @yahoo, మొదలైనవి) మరియు ధృవీకరించబడని లింకులు పూర్తిగా నిరోధించబడ్డాయి.",
       authorizedDomainOnly: "కార్పొరేట్ డొమైన్ వైట్‌లిస్ట్ అమలులో ఉంది: *@siliconbrain.ai",
       btnAutofillAuthorized: "అధీకృత ఎనలిస్ట్‌గా లాగిన్ అవ్వండి (analyst@siliconbrain.ai)",

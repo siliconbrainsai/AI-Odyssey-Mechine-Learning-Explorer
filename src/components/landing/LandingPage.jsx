@@ -127,7 +127,7 @@ export default function LandingPage({
             <div className="space-y-3">
               <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-300 text-xs font-mono font-bold tracking-wider">
                 <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-                <span>SILICONBRAIN AI // DEFENSE & ACADEMIC LABS</span>
+                <span>SILICONBRAINSAI // DEFENSE & ACADEMIC LABS</span>
               </div>
 
               <h1 className="text-2xl sm:text-3xl lg:text-[2.2rem] font-black leading-[1.15] tracking-tight bg-gradient-to-r from-cyan-300 via-teal-200 to-indigo-300 bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(6,182,212,0.25)]">
@@ -135,7 +135,7 @@ export default function LandingPage({
               </h1>
 
               <p className="text-xs sm:text-sm font-semibold text-cyan-400/90 font-mono leading-snug">
-                {landingT.heroSubtitle || "AI-Powered Interactive Learning & Production Studio by SiliconBrain AI."}
+                {landingT.heroSubtitle || "AI-Powered Interactive Learning & Production Studio by Siliconbrainsai."}
               </p>
 
               <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
@@ -263,7 +263,7 @@ export default function LandingPage({
           <div className="flex items-center space-x-2">
             <Shield className="w-4 h-4 text-cyan-400" />
             <span className="font-semibold text-slate-300">
-              SiliconBrain AI • AI Odyssey Command Nexus
+              Siliconbrainsai • AI Odyssey Command Nexus
             </span>
             <span className="text-slate-600">|</span>
             <span className="text-[11px] text-slate-500">

@@ -407,7 +407,7 @@ export default function AuthCard({
       {/* Security Footer Disclaimer */}
       <div className="relative z-10 mt-4 text-center">
         <p className="text-[10px] text-slate-500 font-mono leading-tight">
-          {landingT.authFooter || "SiliconBrain AI • Defense & Enterprise Machine Learning Studio • All telemetry encrypted & audited"}
+          {landingT.authFooter || "Siliconbrainsai • Defense & Enterprise Machine Learning Studio • All telemetry encrypted & audited"}
         </p>
       </div>
 
