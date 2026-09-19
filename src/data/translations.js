@@ -97,9 +97,34 @@ export const mlTranslations = {
       addPointHint: "Click anywhere on the graph canvas to add custom student data points!",
       formulaStudent: "Score = (Hours × w) + Base Points",
       formulaEngineer: "Loss = \\frac{1}{N} \\sum_{i=1}^N (y_i - (w x_i + b))^2",
+
+      // Logistic Regression & Sigmoid Lab
+      logisticTitle: "2. Logistic Regression & Sigmoid Classification Lab",
+      logisticDesc: "Compresses continuous scores $z = wX + b$ through the non-linear Sigmoid activation $\\sigma(z) = \\frac{1}{1 + e^{-z}}$ to yield probabilistic predictions between 0.0 and 1.0.",
+      thresholdLabel: "Decision Threshold (τ):",
+      probScoreLabel: "Predicted Probability P(Pass):",
+      classificationDecision: "Classification Output:",
+      bceLossLabel: "Binary Cross-Entropy Loss:",
+      formulaStudentLog: "Probability = 1 / (1 + e^-(Hours × w + b))",
+      formulaEngineerLog: "\\mathcal{L}_{BCE} = - \\frac{1}{N} \\sum [y \\ln \\hat{y} + (1 - y) \\ln(1 - \\hat{y})]",
+      thresholdIntuition: "Adjusting the threshold τ controls sensitivity: setting τ=0.4 is lenient (reduces False Negatives), while τ=0.7 is strict (reduces False Positives).",
+
+      // K-Means Clustering Lab
+      kmeansTitle: "3. K-Means Clustering & Elbow Method Simulator",
+      kmeansDesc: "An unsupervised algorithm grouping unlabelled student profiles by study hours and practice exams, minimizing within-cluster inertia.",
+      kSliderLabel: "Number of Clusters (k):",
+      stepCentroidBtn: "Step Centroids (Run 1 Iteration)",
+      resetClustersBtn: "Reset Centroids",
+      inertiaLabel: "Inertia (Within-Cluster Sum of Squares):",
+      elbowTitle: "Elbow Method Curve (Optimal k Detection)",
+      elbowDesc: "The 'Elbow' at k=3 reveals optimal clustering where further clusters produce diminishing returns in variance reduction.",
+      clusterA: "Cluster 1: Intensive Achievers",
+      clusterB: "Cluster 2: Consistent Learners",
+      clusterC: "Cluster 3: Foundational Support",
+      clusterD: "Cluster 4: High-Velocity Preppers",
       
       // Decision Tree & Random Forest
-      treeTitle: "2. Decision Tree & Random Forest Ensemble",
+      treeTitle: "4. Decision Tree & Random Forest Ensemble",
       treeDesc: "Decision trees partition feature space using hierarchical if-else decision nodes. Random Forest combines many diverse trees to eliminate overfitting.",
       treeCardTitle: "Single Decision Tree",
       treeCardPoints: [
@@ -120,7 +145,7 @@ export const mlTranslations = {
       confidence: "Confidence:",
 
       // Workflow
-      workflowTitle: "The End-to-End Production ML Workflow",
+      workflowTitle: "5. The End-to-End Production ML Workflow",
       steps: [
         { num: "01", name: "Data Ingestion", desc: "Collecting tabular logs, database records, and streaming telemetry." },
         { num: "02", name: "EDA & Preprocessing", desc: "Handling null values, feature scaling (StandardScaler), and encoding." },
@@ -400,8 +425,33 @@ export const mlTranslations = {
       formulaStudent: "మార్కులు = (చదివిన గంటలు × w) + కనీస మార్కులు (b)",
       formulaEngineer: "లాస్ సూత్రం: MSE = \\frac{1}{N} \\sum (y_i - (w x_i + b))^2",
 
+      // Logistic Regression & Sigmoid Lab
+      logisticTitle: "2. లాజిస్టిక్ రిగ్రెషన్ & సిగ్మోయిడ్ క్లాసిఫికేషన్ ల్యాబ్",
+      logisticDesc: "నిరంతర స్కోర్లను నాన్-లీనియర్ సిగ్మోయిడ్ కర్వ్ ద్వారా 0.0 నుండి 1.0 మధ్య సంభావ్యతగా (Probability) మార్చి బైనరీ వర్గీకరణ నిర్ణయాన్ని అందిస్తుంది.",
+      thresholdLabel: "నిర్ణయ థ్రెషోల్డ్ (Threshold τ):",
+      probScoreLabel: "గణించిన సంభావ్యత P(ఉత్తీర్ణత):",
+      classificationDecision: "వర్గీకరణ నిర్ణయం:",
+      bceLossLabel: "బైనరీ క్రాస్-ఎంట్రోపీ లాస్:",
+      formulaStudentLog: "సంభావ్యత = 1 / (1 + e^-(చదివిన గంటలు × w + b))",
+      formulaEngineerLog: "\\mathcal{L}_{BCE} = - \\frac{1}{N} \\sum [y \\ln \\hat{y} + (1 - y) \\ln(1 - \\hat{y})]",
+      thresholdIntuition: "థ్రెషోల్డ్ మార్చడం ద్వారా మోడల్ ఎంత సున్నితంగా పాస్/ఫెయిల్ నిర్ణయం తీసుకోవాలో నిర్ణయించవచ్చు. τ=0.4 పెడితే ఎక్కువ మందిని సులభంగా పాస్ చేస్తుంది, τ=0.7 పెడితే ఖచ్చితత్వం అవసరం.",
+
+      // K-Means Clustering Lab
+      kmeansTitle: "3. K-మీన్స్ క్లస్టరింగ్ & ఎల్బో మెథడ్ సిమ్యులేటర్",
+      kmeansDesc: "ముందస్తు లేబుల్స్ లేని విద్యార్థుల అధ్యయన నమూనాలను ఇనర్షియా కనిష్టం చేస్తూ k సహజ సమూహాలుగా (Clusters) వర్గీకరించే అన్-సూపర్వైజ్డ్ అల్గారిథమ్.",
+      kSliderLabel: "క్లస్టర్ల సంఖ్య (k):",
+      stepCentroidBtn: "సెంట్రాయిడ్లను కదిలించండి (Run 1 Iteration)",
+      resetClustersBtn: "సెంట్రాయిడ్లను రీసెట్ చేయండి",
+      inertiaLabel: "ఇనర్షియా (వితిన్-క్లస్టర్ సమ్ ఆఫ్ స్క్వేర్స్ - WCSS):",
+      elbowTitle: "ఎల్బో మెథడ్ గ్రాఫ్ (ఆప్టిమల్ k గుర్తింపు)",
+      elbowDesc: "గ్రాఫ్‌లో మోచేయి (Elbow) ఆకారంలో వంగే బిందువు (ఇక్కడ k=3) అత్యుత్తమ సమతుల్యతను సూచిస్తుంది. ఆ తర్వాత అదనపు క్లస్టర్ల వల్ల పెద్దగా ప్రయోజనం ఉండదు.",
+      clusterA: "క్లస్టర్ 1: తీవ్ర అభ్యాసకులు",
+      clusterB: "క్లస్టర్ 2: స్థిరమైన అభ్యాసకులు",
+      clusterC: "క్లస్టర్ 3: ప్రాథమిక సమీక్షకులు",
+      clusterD: "క్లస్టర్ 4: వేగవంతమైన ప్రిపరేషన్",
+
       // Decision Tree & Random Forest
-      treeTitle: "2. డిసిషన్ ట్రీ & రాండమ్ ఫారెస్ట్ ఎన్‌సెంబుల్",
+      treeTitle: "4. డిసిషన్ ట్రీ & రాండమ్ ఫారెస్ట్ ఎన్‌సెంబుల్",
       treeDesc: "డిసిషన్ ట్రీ బ్రాంచింగ్ ప్రశ్నల ద్వారా నిర్ణయాలు తీసుకుంటుంది. రాండమ్ ఫారెస్ట్ అనేక ట్రీలను కలిపి అత్యంత కచ్చితమైన అంచనాలను అందిస్తుంది.",
       treeCardTitle: "సింగిల్ డిసిషన్ ట్రీ (Decision Tree)",
       treeCardPoints: [
@@ -422,7 +472,7 @@ export const mlTranslations = {
       confidence: "నమ్మకపు శాతం (Confidence):",
 
       // Workflow
-      workflowTitle: "ఎండ్-టు-ఎండ్ ప్రొడక్షన్ ML వర్క్‌ఫ్లో",
+      workflowTitle: "5. ఎండ్-టు-ఎండ్ ప్రొడక్షన్ ML వర్క్‌ఫ్లో",
       steps: [
         { num: "01", name: "డేటా సేకరణ (Data Ingestion)", desc: "డేటాబేస్‌లు, లాగ్స్ మరియు స్ట్రీమింగ్ నుండి డేటాను సమీకరించడం." },
         { num: "02", name: "ప్రీ-ప్రాసెసింగ్ & క్లీనింగ్", desc: "మిస్సింగ్ వాల్యూస్ సరిచేయడం, ఫీచర్ స్కేలింగ్ (StandardScaler)." },
