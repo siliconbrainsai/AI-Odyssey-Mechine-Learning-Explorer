@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
+import AuthModal from './components/AuthModal';
 import FoundationsSection from './components/FoundationsSection';
 import AlgorithmsSection from './components/AlgorithmsSection';
 import EngineeringSection from './components/EngineeringSection';
@@ -10,9 +11,29 @@ import { BookOpen, Cpu, Terminal, CheckCircle, Layers, ArrowUp } from 'lucide-re
 
 export default function App() {
   const [lang, setLang] = useState('te'); // Default to Telugu as in original project
-  const [audience, setAudience] = useState('student'); // 'student' or 'engineer'
+  const [currentUser, setCurrentUser] = useState(() => {
+    try {
+      const savedUser = localStorage.getItem('ai_odyssey_user');
+      return savedUser ? JSON.parse(savedUser) : null;
+    } catch {
+      return null;
+    }
+  });
+
+  const [audience, setAudience] = useState(() => {
+    try {
+      const savedUser = localStorage.getItem('ai_odyssey_user');
+      if (savedUser) {
+        const parsed = JSON.parse(savedUser);
+        if (parsed.track) return parsed.track;
+      }
+    } catch {}
+    return 'student'; // 'student' or 'engineer'
+  });
+
   const [activeTab, setActiveTab] = useState('foundations');
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
 
   const t = mlTranslations[lang];
 
@@ -23,6 +44,19 @@ export default function App() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleLoginSuccess = (user) => {
+    setCurrentUser(user);
+    if (user.track) {
+      setAudience(user.track);
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('ai_odyssey_user');
+    localStorage.removeItem('ai_odyssey_token');
+    setCurrentUser(null);
+  };
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -48,8 +82,23 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-cyan-500 selection:text-white flex flex-col justify-between">
       
-      {/* Navbar with Language & Audience controls */}
+      {/* Navbar with Language & Audience controls & Authentication */}
       <Navbar
+        lang={lang}
+        setLang={setLang}
+        audience={audience}
+        setAudience={setAudience}
+        t={t}
+        currentUser={currentUser}
+        onOpenAuth={() => setAuthModalOpen(true)}
+        onLogout={handleLogout}
+      />
+
+      {/* Glassmorphic Authentication & Track Selection Modal */}
+      <AuthModal
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+        onLoginSuccess={handleLoginSuccess}
         lang={lang}
         setLang={setLang}
         audience={audience}

@@ -27,11 +27,13 @@ from pydantic import BaseModel, Field, field_validator
 import numpy as np
 import joblib
 
-# Import custom structured logger
+# Import custom structured logger & auth router
 try:
     from logger import logger
+    from auth import auth_router
 except ImportError:
     from backend.logger import logger
+    from backend.auth import auth_router
 
 # Global in-memory cache for models and metadata
 app_state: Dict[str, Any] = {
@@ -115,6 +117,9 @@ app.add_middleware(
     allow_headers=["*"],
     expose_headers=["X-Request-ID", "X-Process-Time-Ms"]
 )
+
+# Mount Authentication & Onboarding Router
+app.include_router(auth_router)
 
 
 # --------------------------------------------------------------------------
