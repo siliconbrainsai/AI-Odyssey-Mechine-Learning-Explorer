@@ -104,6 +104,17 @@ export default function AuthCard({
       return;
     }
 
+    const cleanEmail = email.trim().toLowerCase();
+
+    // Strict Corporate Operator Whitelist Check
+    if (!cleanEmail.endsWith('@siliconbrain.ai')) {
+      setFeedback({
+        type: 'error',
+        message: t.security?.unauthorizedDomainError || 'Access Restricted: Only @siliconbrain.ai accounts are authorized.'
+      });
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -113,13 +124,13 @@ export default function AuthCard({
         response = await fetch('/api/v1/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
+          body: JSON.stringify({ email: cleanEmail, password })
         });
       } catch {
         response = await fetch('http://127.0.0.1:8000/api/v1/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
+          body: JSON.stringify({ email: cleanEmail, password })
         });
       }
 
@@ -138,11 +149,15 @@ export default function AuthCard({
         }, 600);
         return;
       } else {
-        throw new Error('Invalid credentials');
+        const errJson = response ? await response.json().catch(() => ({})) : {};
+        if (response && response.status === 403) {
+          throw new Error(errJson.detail || 'Access Restricted to Corporate Operators (@siliconbrain.ai).');
+        }
+        throw new Error(errJson.detail || 'Invalid credentials');
       }
-    } catch {
+    } catch (err) {
       // Graceful offline validation for seeded analyst
-      if (email.toLowerCase() === 'analyst@siliconbrain.ai' && password === 'SiliconBrain@2026') {
+      if (cleanEmail === 'analyst@siliconbrain.ai' && password === 'SiliconBrain@2026') {
         const analystUser = {
           email: 'analyst@siliconbrain.ai',
           full_name: 'Senior ML Analyst',
@@ -159,7 +174,7 @@ export default function AuthCard({
       } else {
         setFeedback({
           type: 'error',
-          message: authT.invalidCreds || 'Invalid email or password.'
+          message: err.message || authT.invalidCreds || 'Invalid email credentials or password.'
         });
       }
     } finally {

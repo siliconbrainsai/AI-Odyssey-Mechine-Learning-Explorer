@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import AuthModal from './components/AuthModal';
 import LandingPage from './components/landing/LandingPage';
+import ProtectedRoute from './components/security/ProtectedRoute';
 import FoundationsSection from './components/FoundationsSection';
 import AlgorithmsSection from './components/AlgorithmsSection';
 import EngineeringSection from './components/EngineeringSection';
@@ -134,55 +135,75 @@ export default function App() {
         t={t}
       />
 
-      {/* Main Container */}
+      {/* Main Container Protected by Corporate Access Guard */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-20 w-full flex-1">
         
-        {/* Navigation Tabs Bar */}
-        <div className="sticky top-20 z-40 backdrop-blur-md bg-slate-950/80 py-3 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 mb-8 border-b border-slate-800/60 overflow-x-auto scrollbar-none">
-          <div className="flex space-x-2 min-w-max">
-            {t.navTabs.map((tab) => {
-              const isActive = activeTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  type="button"
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center space-x-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all duration-200 border ${
-                    isActive
-                      ? 'bg-gradient-to-r from-cyan-500/20 to-teal-500/20 border-cyan-500/50 text-cyan-300 shadow-lg shadow-cyan-500/10'
-                      : 'bg-slate-900/60 border-slate-800 text-slate-400 hover:bg-slate-900 hover:text-slate-200 hover:border-slate-700'
-                  }`}
-                >
-                  {getTabIcon(tab.id)}
-                  <span>{tab.label}</span>
-                </button>
-              );
-            })}
+        <ProtectedRoute
+          currentUser={currentUser}
+          t={t}
+          lang={lang}
+          setLang={setLang}
+          onGoHome={() => setView('landing')}
+          onAutofillAnalyst={() => {
+            const analystUser = {
+              email: 'analyst@siliconbrain.ai',
+              full_name: 'Senior ML Analyst',
+              role: 'Senior ML Analyst',
+              track: 'engineer'
+            };
+            localStorage.setItem('ai_odyssey_user', JSON.stringify(analystUser));
+            localStorage.setItem('ai_odyssey_token', 'mock_jwt_analyst_token_2026');
+            setCurrentUser(analystUser);
+            setAudience('engineer');
+          }}
+        >
+          {/* Navigation Tabs Bar */}
+          <div className="sticky top-20 z-40 backdrop-blur-md bg-slate-950/80 py-3 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 mb-8 border-b border-slate-800/60 overflow-x-auto scrollbar-none">
+            <div className="flex space-x-2 min-w-max">
+              {t.navTabs.map((tab) => {
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`flex items-center space-x-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all duration-200 border ${
+                      isActive
+                        ? 'bg-gradient-to-r from-cyan-500/20 to-teal-500/20 border-cyan-500/50 text-cyan-300 shadow-lg shadow-cyan-500/10'
+                        : 'bg-slate-900/60 border-slate-800 text-slate-400 hover:bg-slate-900 hover:text-slate-200 hover:border-slate-700'
+                    }`}
+                  >
+                    {getTabIcon(tab.id)}
+                    <span>{tab.label}</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
-        </div>
 
-        {/* Tab Content Display */}
-        <div className="transition-all duration-300">
-          {activeTab === 'foundations' && (
-            <FoundationsSection t={t} audience={audience} />
-          )}
+          {/* Tab Content Display */}
+          <div className="transition-all duration-300">
+            {activeTab === 'foundations' && (
+              <FoundationsSection t={t} audience={audience} />
+            )}
 
-          {activeTab === 'algorithms' && (
-            <AlgorithmsSection t={t} audience={audience} />
-          )}
+            {activeTab === 'algorithms' && (
+              <AlgorithmsSection t={t} audience={audience} />
+            )}
 
-          {activeTab === 'engineering' && (
-            <EngineeringSection t={t} audience={audience} />
-          )}
+            {activeTab === 'engineering' && (
+              <EngineeringSection t={t} audience={audience} />
+            )}
 
-          {activeTab === 'quiz' && (
-            <QuizSection t={t} lang={lang} />
-          )}
+            {activeTab === 'quiz' && (
+              <QuizSection t={t} lang={lang} />
+            )}
 
-          {activeTab === 'glossary' && (
-            <GlossarySection t={t} audience={audience} />
-          )}
-        </div>
+            {activeTab === 'glossary' && (
+              <GlossarySection t={t} audience={audience} />
+            )}
+          </div>
+        </ProtectedRoute>
 
       </main>
 

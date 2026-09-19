@@ -426,6 +426,18 @@ export const mlTranslations = {
       authFooter: "SiliconBrain AI • Defense & Enterprise Machine Learning Studio • All telemetry encrypted & audited"
     },
 
+    security: {
+      restrictedBadge: "ACCESS CONTROL // LEVEL-4 CLASSIFIED",
+      restrictedTitle: "Access Restricted: Corporate Operator ID Required",
+      restrictedDesc: "The AI Odyssey Machine Learning Laboratory and internal execution modules are restricted to authorized SiliconBrain AI personnel. Only verified corporate accounts ending in @siliconbrain.ai are granted operational clearance.",
+      policyNote: "Security Directive: Public registrations, external domains (@gmail, @yahoo, etc.), and unverified direct links are strictly blocked under corporate compliance standards.",
+      authorizedDomainOnly: "Corporate Domain Whitelist Enforced: *@siliconbrain.ai",
+      btnAutofillAuthorized: "Authenticate as Authorized Analyst (analyst@siliconbrain.ai)",
+      btnReturnToNexus: "Return to Command Nexus",
+      unauthorizedDomainError: "Access Restricted: Only @siliconbrain.ai accounts are authorized.",
+      statusBlocked: "BLOCKED // 403 FORBIDDEN"
+    },
+
     footer: {
       text: "Designed for Students & Engineers • Bilingual ML Learning Interactive Portal",
       rights: "Built with React, Vite & Tailwind CSS • Production Ready",
@@ -858,6 +870,18 @@ export const mlTranslations = {
       quickGuestExplore: "🚀 తక్షణ గెస్ట్ యాక్సెస్ (లాగిన్ అవసరం లేదు)",
       enterLabDirectly: "పూర్తి ఇంటరాక్టివ్ ల్యాబ్‌ను తెరవండి",
       authFooter: "సిలికాన్‌బ్రెయిన్ AI • డిఫెన్స్ & ఎంటర్‌ప్రైజ్ మెషిన్ లెర్నింగ్ స్టూడియో • సురక్షిత ఆడిటింగ్ వ్యవస్థ"
+    },
+
+    security: {
+      restrictedBadge: "యాక్సెస్ కంట్రోల్ // లెవల్-4 క్లాసిఫైడ్",
+      restrictedTitle: "యాక్సెస్ పరిమితం: కార్పొరేట్ ఆపరేటర్ ID తప్పనిసరి",
+      restrictedDesc: "AI ఒడిస్సీ మెషిన్ లెర్నింగ్ లేబొరేటరీ మరియు అంతర్గత మోడల్స్ కేవలం సిలికాన్‌బ్రెయిన్ AI అధికారిక సిబ్బందికి మాత్రమే పరిమితం చేయబడ్డాయి. @siliconbrain.ai తో ముగిసే అధీకృత ఖాతాలకు మాత్రమే యాక్సెస్ లభిస్తుంది.",
+      policyNote: "భద్రతా నిబంధన: కార్పొరేట్ ప్రమాణాల ప్రకారం పబ్లిక్ రిజిస్ట్రేషన్లు, బాహ్య డొమైన్లు (@gmail, @yahoo, మొదలైనవి) మరియు ధృవీకరించబడని లింకులు పూర్తిగా నిరోధించబడ్డాయి.",
+      authorizedDomainOnly: "కార్పొరేట్ డొమైన్ వైట్‌లిస్ట్ అమలులో ఉంది: *@siliconbrain.ai",
+      btnAutofillAuthorized: "అధీకృత ఎనలిస్ట్‌గా లాగిన్ అవ్వండి (analyst@siliconbrain.ai)",
+      btnReturnToNexus: "కమాండ్ నెక్సస్‌కు తిరిగి వెళ్లండి",
+      unauthorizedDomainError: "యాక్సెస్ పరిమితం: కేవలం @siliconbrain.ai ఖాతాలకు మాత్రమే అనుమతి ఉంది.",
+      statusBlocked: "బ్లాక్ చేయబడింది // 403 నిషేధించబడింది"
     },
 
     footer: {

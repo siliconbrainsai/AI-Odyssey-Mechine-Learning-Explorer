@@ -107,6 +107,12 @@ export default function AuthModal({
       return;
     }
 
+    const cleanEmail = email.trim().toLowerCase();
+    if (!cleanEmail.endsWith('@siliconbrain.ai')) {
+      setErrorMessage(t.security?.unauthorizedDomainError || 'Access Restricted: Corporate Operator ID (@siliconbrain.ai) Required.');
+      return;
+    }
+
     if (authMode === 'signup') {
       if (!fullName) {
         setErrorMessage(authT.requiredField || 'Please enter your full name.');
@@ -126,8 +132,8 @@ export default function AuthModal({
 
     const endpoint = authMode === 'signup' ? '/api/v1/auth/register' : '/api/v1/auth/login';
     const payload = authMode === 'signup' 
-      ? { email, password, full_name: fullName, track: selectedTrack }
-      : { email, password };
+      ? { email: cleanEmail, password, full_name: fullName, track: selectedTrack }
+      : { email: cleanEmail, password };
 
     try {
       // First attempt local API or proxied API
