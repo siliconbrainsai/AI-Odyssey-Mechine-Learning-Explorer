@@ -82,19 +82,11 @@ export default function AuthModal({
     setTimeout(() => setSuccessMessage(''), 2500);
   };
 
-  // Quick guest bypass
+  // Quick guest bypass disabled for security
   const handleGuestExplore = () => {
-    const guestUser = {
-      email: 'guest@odyssey.local',
-      full_name: authT.guestUser || 'Guest Explorer',
-      role: 'Guest Explorer',
-      track: selectedTrack,
-      isGuest: true
-    };
-    localStorage.setItem('ai_odyssey_user', JSON.stringify(guestUser));
-    setAudience(selectedTrack);
-    onLoginSuccess(guestUser);
-    onClose();
+    setErrorMessage(lang === 'en' 
+      ? 'Access Restricted: Guest bypass is disabled. Dashboard access requires verified corporate operator credentials (@siliconbrain.ai).'
+      : 'యాక్సెస్ పరిమితం: గెస్ట్ యాక్సెస్ నిలిపివేయబడింది. డ్యాష్‌బోర్డ్ యాక్సెస్ కోసం కార్పొరేట్ ఆపరేటర్ ఖాతా (@siliconbrain.ai) అవసరం.');
   };
 
   const handleSubmit = async (e) => {
